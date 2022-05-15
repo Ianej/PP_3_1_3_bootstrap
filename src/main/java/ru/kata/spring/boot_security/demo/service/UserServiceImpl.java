@@ -14,8 +14,12 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<User> listUsers() {
@@ -24,9 +28,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void addUser(User user) {
-        System.out.println(user);
         userDao.save(user);
-        System.out.println("findUserByName(user.getName()) -> " + findUserByName(user.getName()));
     }
     @Transactional
     @Override
@@ -58,14 +60,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("username -> " + username);
         User user = userDao.findUserByName(username);
         if(user == null) {
             throw new UsernameNotFoundException("Неизвестный пользователь: " + username);
         }
         List<String> str = new ArrayList<>();
         for (Role role : getRolesByUser(user.getId())) {
-            System.out.println(role);
             str.add(role.getRoleName());
         }
         UserDetails userDetails = org.springframework.security.core.userdetails.User

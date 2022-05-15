@@ -10,8 +10,12 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 
 @Controller
 public class RoleController {
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @GetMapping(value = "/admin/rolesList")
     public String printRoles(Role role, ModelMap modelMap) {
         modelMap.addAttribute("role", role);

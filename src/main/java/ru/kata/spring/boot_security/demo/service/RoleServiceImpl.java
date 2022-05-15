@@ -10,8 +10,12 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService{
-    @Autowired
-    private RoleDao roleDao;
+    private final RoleDao roleDao;
+
+    public RoleServiceImpl(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<Role> listRoles() {
