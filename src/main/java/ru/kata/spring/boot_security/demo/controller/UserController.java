@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,10 @@ public class UserController {
         this.userService = userService;
         this.roleService = roleService;
     }
+    @GetMapping(value = "/")
+    public String loginUser () {
+        return "redirect:/login";
+    }
 
     @GetMapping(value = "/admin")
     public String printAdminPage(ModelMap modelMap) {
@@ -37,7 +40,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/admin/newUser")
-    public String newUser(User user) {
+    public String newUser(User user) throws Exception {
+        String name = user.getName();
+        if (userService.findUserByName(name)!=null) {
+            throw new Exception("Имя существует, введите пожалуйста другое имя");
+        }
         userService.addUser(user);
         return "redirect:/admin";
     }

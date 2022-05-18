@@ -88,7 +88,7 @@
                                 <form class="col-md-4 mx-auto text-center font-weight-bold" th:action="@{/admin/newUser}" th:object="${user}" method="post">
                                     <div class="form-group">
                                         <label for="name">First name</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="First name">
+                                        <input type="text" class="form-control"  minlength="3" id="name" name="name" placeholder="First name" ><!--pattern="[A-Za-zА-Яа-яЁё0-9]{1,20}"-->
                                     </div>
                                     <div class="form-group">
                                         <label for="lastName" >Last name</label>
@@ -96,11 +96,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="age">Age</label>
-                                        <input type="number" class="form-control" id="age" name="age" placeholder="Age">
+                                        <input type="number" min="1" max="150" value="1" class="form-control" id="age" name="age" placeholder="Age" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" value="Z@z.ru" id="email" name="email" placeholder="Email">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>

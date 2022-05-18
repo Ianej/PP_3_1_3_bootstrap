@@ -18,10 +18,9 @@ public class User implements UserDetails {
     private String name;
     private String lastName;
 
-
-
     private String email;
     private String password;
+    //@V
     private int age;
     @ManyToMany(cascade = {
             CascadeType.MERGE})
